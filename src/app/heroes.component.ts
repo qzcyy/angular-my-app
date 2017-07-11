@@ -1,16 +1,10 @@
 import { Component,OnInit } from '@angular/core';
 import {Hero} from "./hero";
+import {Router} from "@angular/router"
 import {HeroService} from "./hero.service";
 @Component({
   selector: 'my-heroes',
-  template: `
-  <h2>My Heroes</h2>
-  <ul class="heroes">
-    <li *ngFor="let hero of heroes" (click)="selectHero(hero)" [class.selected]="hero==selectedHero">
-      <span class="badge">{{hero.id}}</span>{{hero.name}}
-    </li>
-  </ul>
-  <hero-detail [hero]="selectedHero"></hero-detail>`,
+  templateUrl:"./heros.component.html",
   styles: [`
   .selected {
     background-color: #CFD8DC !important;
@@ -68,9 +62,29 @@ export class HeroesComponent {
   selectHero(hero:Hero):void{
     this.selectedHero=hero;
   }
-  constructor(private heroService:HeroService){}
+  constructor(private heroService:HeroService,private router:Router){}
   ngOnInit():void{
     this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+  }
+  gotoDetail():void{
+    this.router.navigate(["/detail",this.selectedHero.id]);
+  }
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.create(name)
+      .then(hero => {
+        this.heroes.push(hero);
+        this.selectedHero = null;
+      });
+  }
+  delete(hero: Hero): void {
+    this.heroService
+      .delete(hero.id)
+      .then(() => {
+        this.heroes = this.heroes.filter(h => h !== hero);
+        if (this.selectedHero === hero) { this.selectedHero = null; }
+      });
   }
 
 }
