@@ -14,6 +14,7 @@ import {HeroService} from "./hero.service";
 import {DashboardComponent} from "./dashboard.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {HeroSerchComponent} from "./hero_serch.component";
+import {HighlightDirective} from "./attribute-directives";
 @NgModule({
   imports:      [
     BrowserModule,
@@ -22,7 +23,7 @@ import {HeroSerchComponent} from "./hero_serch.component";
     HttpModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
-  declarations: [ AppComponent,HeroDetailComponent,HeroesComponent,DashboardComponent,HeroSerchComponent ],
+  declarations: [ AppComponent,HeroDetailComponent,HeroesComponent,DashboardComponent,HeroSerchComponent,HighlightDirective ],
   providers:[HeroService],
   bootstrap:    [ AppComponent ]
 })

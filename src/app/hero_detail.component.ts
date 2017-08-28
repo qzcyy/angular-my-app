@@ -10,8 +10,8 @@ import 'rxjs/add/operator/switchMap'
 @Component({
   selector:"hero-detail",
   template:`<div *ngIf="hero">
-  <h1>{{title}}</h1>
-  <h2>{{hero.name}} details!</h2>
+  <h1 >{{title}}</h1>
+  <h2 [myHighlight]="'blue'">{{hero.name}} details!</h2>
   <div><label>id: </label>{{hero.id}}</div>
   <div><label>name: </label>
   <input [(ngModel)]="hero.name" placeholder="name">
@@ -36,7 +36,7 @@ export class HeroDetailComponent implements OnInit{
   goBack():void{
     this.location.back()
   }
-  save():void{
+  save():void{ 
     this.heroService.update(this.hero).then(()=>this.goBack());
   }
 }
